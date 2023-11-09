@@ -21,7 +21,15 @@ exports.get_one_post = async (req, res) => {
     if (post === null) {
       res.status(500).json("Null, Cannot Find This Post.");
     } else {
-      res.status(200).json(post);
+      res.status(200).json({
+        _id: post.id,
+        title: post.title,
+        content: post.content,
+        author: post.author,
+        comments: post.comments,
+        createdAt: post.creation_time_formatted,
+        updatedAt: post.updatedAt_time_formatted,
+      });
     }
     return;
   } catch (err) {
