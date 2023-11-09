@@ -1,23 +1,24 @@
+import { Navbar } from "./App";
+import PostsProfile from "./FetchingPosts";
+import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-function usePosts() {
-  const [postURL, setPostURL] = useState([]);
+export function usePosts() {
+  const [postURL, setPostURL] = useState({});
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const param = useParams();
+  const link = `/api/posts/${param.postId}`;
+  console.log(link);
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch("api/posts");
-        console.log(response);
+        const response = await fetch(link);
         if (response.status >= 400) console.log(response);
         const actualPosts = await response.json();
-        const data = actualPosts.map((post) => ({
-          title: post.title,
-          content: post.content,
-          author: post.author,
-        }));
-        setPostURL(data);
+        setPostURL(actualPosts);
+        console.log(actualPosts);
       } catch {
         setError(error);
       } finally {
@@ -32,19 +33,26 @@ function usePosts() {
 function Post() {
   const { postURL, error, loading } = usePosts();
 
-  if (error) return <>{error}</>;
+  if (error)
+    return (
+      <h1 style={{ color: "black", textAlign: "center" }}>
+        Network error, please try again
+      </h1>
+    );
   if (loading)
     return <h1 style={{ color: "black", textAlign: "center" }}>LOADING...</h1>;
 
   return (
     <>
-      {postURL.map((post) => (
-        <>
-          <div>{post.title}</div>
-          <div>{post.content}</div>
-          <div>{post.author.username}</div>
-        </>
-      ))}
+      <Navbar />
+      <div className="one-post-container">
+        <div key={postURL.postId} className="one-post">
+          <div className="one-post-title">{postURL.title}</div>
+          <div className="one-post-creationTime">{postURL.createdAt}</div>
+          <div className="one-post-content">{postURL.content}</div>
+          <div className="one-post-author">{postURL.author.username}</div>
+        </div>
+      </div>
     </>
   );
 }
