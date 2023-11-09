@@ -17,7 +17,7 @@ exports.get_one_post = async (req, res) => {
       .populate("comments")
       .populate("author")
       .exec();
-    res.send(200).json(post);
+    res.status(200).json(post);
   } catch (err) {
     res.status(500).json(err);
   }

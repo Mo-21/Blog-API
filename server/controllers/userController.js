@@ -3,7 +3,6 @@ const { body, validationResult } = require("express-validator");
 
 const Post = require("../models/posts");
 const User = require("../models/user");
-const Comment = require("../models/comments");
 
 exports.get_dashboard = asyncHandler(async (req, res) => {
   const [posts] = await Promise.all([

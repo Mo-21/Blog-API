@@ -8,8 +8,8 @@ const { protect } = require("../middleware/authenticateUser");
 
 //Normal visitor
 router.get("/posts", post_controller.get_posts);
-router.get("/posts/:id", post_controller.get_one_post);
-router.post("/posts/:id/comment", comment_controller.post_comment);
+router.get("/posts/:postId", post_controller.get_one_post);
+router.post("/posts/:postId/comment", comment_controller.post_comment);
 // router.get("/user", user_controller.get_user);
 
 //Editor

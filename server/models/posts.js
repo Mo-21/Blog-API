@@ -19,21 +19,23 @@ const postSchema = new Schema(
       ref: "User",
       required: true,
     },
-    comments: {
-      type: Schema.Types.ObjectId,
-      ref: "Comment",
-    },
+    comments: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Comment",
+      },
+    ],
   },
   {
     timestamps: true,
   },
 );
 
-postSchema.virtual("time_formatted").get(function () {
-  return DateTime.fromJSDate(this.timestamps).toLocaleString({
-    ...DateTime.DATE_MED,
-    ...DateTime.TIME_SIMPLE,
-  });
-});
+// postSchema.virtual("time_formatted").get(function () {
+//   return DateTime.fromJSDate(this.createdAt).toLocaleString({
+//     ...DateTime.DATE_MED,
+//     ...DateTime.TIME_SIMPLE,
+//   });
+// });
 
 module.exports = mongoose.model("Post", postSchema);
