@@ -1,7 +1,7 @@
 import { Navbar } from "./App";
-import PostsProfile from "./FetchingPosts";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import Comment from "./Comment";
 
 export function usePosts() {
   const [postURL, setPostURL] = useState({});
@@ -48,11 +48,14 @@ function Post() {
       <div className="one-post-container">
         <div key={postURL.postId} className="one-post">
           <div className="one-post-title">{postURL.title}</div>
-          <div className="one-post-creationTime">{postURL.createdAt}</div>
+          <div className="one-post-creationTime">
+            Created at: {postURL.createdAt}
+          </div>
           <div className="one-post-content">{postURL.content}</div>
           <div className="one-post-author">{postURL.author.username}</div>
         </div>
       </div>
+      <Comment />
     </>
   );
 }
