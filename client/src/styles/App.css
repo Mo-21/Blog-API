@@ -1,0 +1,71 @@
+@font-face {
+  font-family: Merriweather;
+  src: url(../assets/Merriweather-Light.ttf);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Merriweather;
+}
+
+div .title {
+  color: white;
+  background-color: #101920;
+  text-align: center;
+  font-size: 2.3rem;
+  padding: 20px;
+  border-radius: 0 0 30px 30px;
+}
+
+.posts-group {
+  display: flex;
+}
+
+.post {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 1.2rem;
+  gap: 3px;
+  margin-top: 20px;
+}
+
+.post .post-title {
+  font-weight: bold;
+  font-size: 1.6rem;
+}
+
+.post .post-author {
+  font-style: italic;
+}
+
+.one-post-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.one-post {
+  border: 1px grey solid;
+  padding: 10px 40px;
+  min-height: 600px;
+}
+
+.one-post-title {
+  font-weight: bold;
+  font-size: 1.6rem;
+  padding: 10px;
+}
+
+.one-post-content {
+  font-size: 1.3rem;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+.one-post-creationTime,
+.one-post-author {
+  font-style: italic;
+  padding: 10px;
+}
