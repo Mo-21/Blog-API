@@ -15,9 +15,8 @@ const postSchema = new Schema(
       required: true,
     },
     author: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
+      username: { type: "String", required: true },
+      id: { type: Schema.Types.ObjectId, ref: "User", require: true },
     },
     comments: [
       {
@@ -31,11 +30,18 @@ const postSchema = new Schema(
   },
 );
 
-// postSchema.virtual("time_formatted").get(function () {
-//   return DateTime.fromJSDate(this.createdAt).toLocaleString({
-//     ...DateTime.DATE_MED,
-//     ...DateTime.TIME_SIMPLE,
-//   });
-// });
+postSchema.virtual("creation_time_formatted").get(function () {
+  return DateTime.fromJSDate(this.createdAt).toLocaleString({
+    ...DateTime.DATE_MED,
+    ...DateTime.TIME_SIMPLE,
+  });
+});
+
+postSchema.virtual("updatedAt_time_formatted").get(function () {
+  return DateTime.fromJSDate(this.updatedAt).toLocaleString({
+    ...DateTime.DATE_MED,
+    ...DateTime.TIME_SIMPLE,
+  });
+});
 
 module.exports = mongoose.model("Post", postSchema);

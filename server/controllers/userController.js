@@ -30,7 +30,7 @@ exports.create_post = [
     const post = new Post({
       title: req.body.title,
       content: req.body.content,
-      author: _id,
+      author: { username: username, id: _id },
     });
     if (!errors.isEmpty()) {
       res.json(errors.array().msg);
@@ -44,6 +44,8 @@ exports.create_post = [
           content: req.body.content,
           author: username,
           comments: req.body.comments,
+          createdAt: post.creation_time_formatted,
+          updatedAt: post.updatedAt_time_formatted,
         });
       } catch (err) {
         res.status(401).json(err);
@@ -62,13 +64,14 @@ exports.edit_post = [
 
   asyncHandler(async (req, res) => {
     const errors = validationResult(req);
-    const { _id } = await User.findById(req.user.id);
+    const { _id, username } = await User.findById(req.user.id);
+    const currentPost = await Post.findById(req.params.postId).exec();
 
     const post = new Post({
       _id: req.params.postId,
-      title: req.body.title,
-      content: req.body.content,
-      author: _id,
+      title: req.body.title ? req.body.title : currentPost.title,
+      content: req.body.content ? req.body.content : currentPost.content,
+      author: { username: username, id: _id },
     });
     if (!errors.isEmpty()) {
       res.json(errors.array().msg);
@@ -79,7 +82,15 @@ exports.edit_post = [
           post,
           {},
         );
-        res.status(201).json(updatedPost);
+        res.status(201).json({
+          _id: updatedPost.id,
+          title: req.body.title,
+          content: req.body.content,
+          author: username,
+          comments: req.body.comments,
+          createdAt: updatedPost.creation_time_formatted,
+          updatedAt: updatedPost.updatedAt_time_formatted,
+        });
       } catch (err) {
         res.status(401).json(err);
       }
