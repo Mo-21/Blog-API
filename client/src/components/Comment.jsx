@@ -18,7 +18,6 @@ function Comment() {
     e.preventDefault();
     setComment("");
     setUsername("");
-    console.log(comment, username);
 
     try {
       const response = await fetch(`/api/posts/${params.postId}/comment`, {
@@ -33,40 +32,53 @@ function Comment() {
       }
 
       const data = await response.json();
-      console.log(data);
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    <>
-      <form action="" method="post">
-        <label htmlFor="username">Username</label>
-        <input
-          type="text"
-          id="username"
-          name="username"
-          placeholder="It could be anything..."
-          onChange={handleUsernameChange}
-          value={username}
-          required
-        />
+    <div className="mt-4">
+      <form className="comment-form" action="" method="post">
+        <div className="mb-3">
+          <label className="username form-label" htmlFor="username">
+            Username
+          </label>
+          <input
+            type="text"
+            id="username"
+            className="form-control"
+            name="username"
+            placeholder="It could be anything..."
+            onChange={handleUsernameChange}
+            value={username}
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label className="comment form-label" htmlFor="comment">
+            Comment
+          </label>
 
-        <label htmlFor="comment">Comment</label>
-        <input
-          onChange={handleContentChange}
-          type="text"
-          id="comment"
-          name="comment"
-          value={comment}
-          required
-        />
-        <button onClick={handleCommentSubmission} type="submit">
-          Submit
-        </button>
+          <textarea
+            onChange={handleContentChange}
+            type="text"
+            id="comment"
+            className="form-control"
+            name="comment"
+            value={comment}
+            required
+          />
+          <button
+            className="btn"
+            onClick={handleCommentSubmission}
+            type="submit"
+          >
+            Submit
+          </button>
+        </div>
       </form>
-    </>
+    </div>
   );
 }
 

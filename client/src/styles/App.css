@@ -69,3 +69,45 @@ div .title {
   font-style: italic;
   padding: 10px;
 }
+
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.comment,
+.username {
+  font-weight: bold;
+  font-size: 1.1rem;
+  padding: 5px;
+}
+
+.btn {
+  background-color: #101920;
+  color: white;
+  margin-top: 1rem;
+}
+
+form .mb-3 {
+  width: 60%;
+}
+
+.comments-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card-title {
+  font-weight: bold;
+}
+
+.card-date {
+  font-style: italic;
+}
+
+div .card {
+  width: 80%;
+}

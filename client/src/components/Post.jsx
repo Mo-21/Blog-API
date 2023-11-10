@@ -55,6 +55,19 @@ function Post() {
           <div className="one-post-author">{postURL.author.username}</div>
         </div>
       </div>
+      <hr />
+      <div className="comments-group mt-4">
+        <h2>Comments</h2>
+        {postURL.comments.map((post, index) => (
+          <div key={index} className="card mb-3">
+            <div className="card-body">
+              <h5 className="card-title">{post.username}</h5>
+              <p className="card-text">{post.content}</p>
+              <div className="card-date">{post.creationDate}</div>
+            </div>
+          </div>
+        ))}
+      </div>
       <Comment />
     </>
   );
