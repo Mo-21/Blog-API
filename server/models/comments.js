@@ -19,11 +19,10 @@ const commentSchema = new Schema({
   },
 });
 
-commentSchema.virtual("time_formatted").get(function () {
-  return DateTime.fromJSDate(this.creationDate).toLocaleString({
-    ...DateTime.DATE_MED,
-    ...DateTime.TIME_SIMPLE,
-  });
+commentSchema.virtual("comment_time_formatted").get(function () {
+  return DateTime.fromJSDate(this.creationDate).toLocaleString(
+    DateTime.DATE_MED,
+  );
 });
 
 module.exports = mongoose.model("Comment", commentSchema);

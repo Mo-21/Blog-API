@@ -9,11 +9,13 @@ exports.post_comment = [
     .trim()
     .isLength({ max: 25 })
     .withMessage("Max 25 characters allowed")
+    .stripLow()
     .escape(),
   body("content")
     .trim()
     .isLength({ max: 500 })
     .withMessage("Max 500 characters allowed")
+    .stripLow()
     .escape(),
   asyncHandler(async (req, res) => {
     const errors = validationResult(req);
