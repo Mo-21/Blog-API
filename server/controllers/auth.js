@@ -45,14 +45,23 @@ exports.user_register = [
             email: email,
           });
           await user.save();
+          const refreshToken = generateRefreshToken(user._id);
+          const newUser = await User.findOneAndUpdate(
+            { username: user.username },
+            {
+              refreshToken: refreshToken,
+              accessToken: generateAccessToken(user._id),
+            },
+            { new: true },
+          );
           if (user)
-            res.status(201).json({
-              _id: user.id,
-              name: user.username,
-              email: user.email,
-              password: user.password,
-              token: generateToken(user._id),
-            });
+            res
+              .status(201)
+              .cookie("jwt", refreshToken, {
+                httpOnly: true,
+                maxAge: 24 * 60 * 60 * 1000,
+              })
+              .json(newUser);
         });
       } catch (err) {
         res.status(400).json(err);
@@ -64,23 +73,36 @@ exports.user_register = [
 exports.user_login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email }).exec();
-
+  const refreshToken = generateRefreshToken(user._id);
   if (user && (await bcrypt.compare(password, user.password))) {
-    res.status(200).json({
-      _id: user.id,
-      name: user.username,
-      email: user.email,
-      password: user.password,
-      token: generateToken(user._id),
-    });
+    res.cookie("jwt", refreshToken, {
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000,
+    }); // We add secure: true for https requests in production
+    const newUser = await User.findOneAndUpdate(
+      { username: user.username },
+      {
+        refreshToken: refreshToken,
+        accessToken: generateAccessToken(user._id),
+      },
+      { new: true },
+    );
+    res.status(200).json(newUser);
   } else {
     res.status(400).json("Invalid Credentials");
   }
 });
 
-//Generate JWT Token
-const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
+//Generate Access JWT Token
+const generateAccessToken = (id) => {
+  return jwt.sign({ id }, process.env.ACCESS_JWT_SECRET, {
+    expiresIn: "30s",
+  });
+};
+
+//Generate Refresh JWT Token
+const generateRefreshToken = (id) => {
+  return jwt.sign({ id }, process.env.REFRESH_JWT_SECRET, {
     expiresIn: "1d",
   });
 };
