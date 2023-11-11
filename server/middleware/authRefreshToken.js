@@ -19,11 +19,9 @@ exports.token = asyncHandler(async (req, res, next) => {
     return res.status(403);
   }
 
-  const newAccessToken = generateAccessToken(decoded.id);
-
   const newUser = await User.findOneAndUpdate(
     { username: user.username },
-    { refreshToken: newAccessToken },
+    { accessToken: generateAccessToken(decoded.id) },
     { new: true },
   );
   res;
@@ -33,6 +31,6 @@ exports.token = asyncHandler(async (req, res, next) => {
 
 const generateAccessToken = (id) => {
   return jwt.sign({ id }, process.env.ACCESS_JWT_SECRET, {
-    expiresIn: "30s",
+    expiresIn: "15m",
   });
 };

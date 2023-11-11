@@ -52,7 +52,7 @@ exports.user_register = [
               refreshToken: refreshToken,
               accessToken: generateAccessToken(user._id),
             },
-            { new: true },
+            {},
           );
           if (user)
             res
@@ -73,21 +73,23 @@ exports.user_register = [
 exports.user_login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email }).exec();
-  const refreshToken = generateRefreshToken(user._id);
   if (user && (await bcrypt.compare(password, user.password))) {
-    res.cookie("jwt", refreshToken, {
-      httpOnly: true,
-      maxAge: 24 * 60 * 60 * 1000,
-    }); // We add secure: true for https requests in production
     const newUser = await User.findOneAndUpdate(
       { username: user.username },
       {
-        refreshToken: refreshToken,
+        refreshToken: generateRefreshToken(user._id),
         accessToken: generateAccessToken(user._id),
       },
       { new: true },
     );
-    res.status(200).json(newUser);
+    res
+      .status(200)
+      .cookie("jwt", newUser.refreshToken, {
+        // We add secure: true for https requests in production
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      })
+      .json(newUser);
   } else {
     res.status(400).json("Invalid Credentials");
   }
@@ -96,7 +98,7 @@ exports.user_login = asyncHandler(async (req, res) => {
 //Generate Access JWT Token
 const generateAccessToken = (id) => {
   return jwt.sign({ id }, process.env.ACCESS_JWT_SECRET, {
-    expiresIn: "30s",
+    expiresIn: "15m",
   });
 };
 
