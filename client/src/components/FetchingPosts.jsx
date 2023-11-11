@@ -10,7 +10,6 @@ export function usePosts() {
     const fetchPosts = async () => {
       try {
         const response = await fetch("/api/posts");
-        console.log(response);
         if (response.status >= 400) console.log(response);
         const actualPosts = await response.json();
         const data = actualPosts.map((post) => ({

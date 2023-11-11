@@ -27,9 +27,10 @@ function Delete(id) {
           throw new Error(setError("Something went wrong. Please try again"));
         }
         const data = await response.json();
-        console.log(data);
         navigate("dashboard");
-      } catch (err) {}
+      } catch (err) {
+        console.error(err);
+      }
     };
     deletePost();
   }, []);

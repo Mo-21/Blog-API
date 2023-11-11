@@ -16,6 +16,7 @@ const postSchema = new Schema(
     },
     author: {
       username: { type: "String", required: true },
+      profilePic: { type: "String" },
       id: { type: Schema.Types.ObjectId, ref: "User", require: true },
     },
     comments: [

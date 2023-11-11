@@ -14,7 +14,6 @@ exports.protect = asyncHandler(async (req, res, next) => {
     try {
       //Get token from header
       token = req.headers.authorization.split(" ")[1];
-      // console.log(token);
       const decoded = jwt.verify(token, process.env.ACCESS_JWT_SECRET);
 
       //Get the user from the token

@@ -28,8 +28,6 @@ function Login() {
       const jwt = Cookies.get("jwt");
       const accessToken = data.accessToken;
 
-      console.log(data);
-
       if (response.status !== 200) {
         throw new Error("Unauthorized");
       } else {

@@ -17,12 +17,12 @@ export function usePosts() {
           return "Not Authorized";
         }
         const actualPosts = await response.json();
-        // console.log();
         const data = actualPosts.map((post) => ({
           postId: post._id,
           title: post.title,
           content: post.content,
           author: post.author,
+          profilePic: post.author.profilePic,
           isDraft: post.isDraft,
         }));
         setPostURL(data);
@@ -51,8 +51,6 @@ function PostsProfile() {
     return <h1 style={{ color: "black", textAlign: "center" }}>LOADING...</h1>;
 
   const handleDelete = async (id) => {
-    console.log(id);
-
     try {
       const response = await fetch(`api/dashboard/${id}/delete`, {
         method: "DELETE",
@@ -69,7 +67,6 @@ function PostsProfile() {
         throw new Error("Something went wrong. Please try again");
       }
       const data = await response.json();
-      console.log(data);
     } catch (err) {
       console.log(err);
     }

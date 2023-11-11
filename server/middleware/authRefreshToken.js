@@ -11,7 +11,6 @@ exports.token = asyncHandler(async (req, res, next) => {
 
   const refreshToken = cookies.jwt;
   if (!refreshToken) res.status(401).json("Not Authorized!");
-  //   console.log(refreshToken);
   const decoded = jwt.verify(refreshToken, process.env.REFRESH_JWT_SECRET);
 
   const user = await User.findById(decoded.id).select("-password").exec();
