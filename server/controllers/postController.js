@@ -4,7 +4,7 @@ const Comment = require("../models/comments");
 //Getting All Posts
 exports.get_posts = async (req, res) => {
   try {
-    const posts = await Post.find().exec();
+    const posts = await Post.find({ isDraft: false }).exec();
     res.status(200).json(posts);
   } catch (err) {
     res.status(500).json(err);
@@ -18,6 +18,7 @@ exports.get_one_post = async (req, res) => {
       .populate("comments")
       .populate("author")
       .exec();
+    if (post.isDraft === true) return res.sendStatus(401).json("Not Allowed");
     const comments = [];
     post.comments.map((comment) => {
       comments.push(comment);
@@ -63,6 +64,6 @@ exports.get_one_post = async (req, res) => {
     }
     return;
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500);
   }
 };

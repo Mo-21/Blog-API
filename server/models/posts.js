@@ -24,6 +24,10 @@ const postSchema = new Schema(
         ref: "Comment",
       },
     ],
+    isDraft: {
+      type: "Boolean",
+      default: false,
+    },
   },
   {
     timestamps: true,

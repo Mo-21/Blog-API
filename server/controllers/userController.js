@@ -22,7 +22,7 @@ exports.create_post = [
     .isLength({ max: 25 })
     .withMessage("Max 25 characters allowed")
     .escape(),
-  body("content").trim().escape(),
+  body("content").trim(),
   asyncHandler(async (req, res) => {
     const errors = validationResult(req);
     const { _id, username } = await User.findById(req.user.id);
@@ -31,9 +31,10 @@ exports.create_post = [
       title: req.body.title,
       content: req.body.content,
       author: { username: username, id: _id },
+      isDraft: req.body.isDraft,
     });
     if (!errors.isEmpty()) {
-      res.json(errors.array().msg);
+      res.status(500).json(errors.array().msg);
     } else {
       try {
         await post.save();
@@ -44,6 +45,7 @@ exports.create_post = [
           content: req.body.content,
           author: username,
           comments: req.body.comments,
+          isDraft: req.body.isDraft,
           createdAt: post.creation_time_formatted,
           updatedAt: post.updatedAt_time_formatted,
         });
@@ -87,6 +89,7 @@ exports.edit_post = [
           title: req.body.title,
           content: req.body.content,
           author: username,
+          isDraft: req.body.isDraft,
           comments: req.body.comments,
           createdAt: updatedPost.creation_time_formatted,
           updatedAt: updatedPost.updatedAt_time_formatted,
