@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 function Logout() {
   const [error, setError] = useState(null);
@@ -15,6 +16,7 @@ function Logout() {
       if (!response.ok) {
         throw new Error("Invalid credentials");
       }
+      Cookies.remove("username");
       navigate("/");
     } catch (err) {
       setError(err.message);

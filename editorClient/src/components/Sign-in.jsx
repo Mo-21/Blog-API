@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import { useAuth } from "./AuthContext";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -7,6 +9,7 @@ function Login() {
   const [error, setError] = useState(null);
 
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSignIn = async () => {
     try {
@@ -21,11 +24,19 @@ function Login() {
       if (!response.ok) {
         throw new Error("Invalid credentials");
       }
+      const data = await response.json();
+      const jwt = Cookies.get("jwt");
+      const accessToken = data.accessToken;
 
-      // Assuming successful login
-      // You may want to handle tokens or session management here
+      console.log(data);
 
-      navigate("/"); // Redirect to dashboard on successful login
+      if (response.status !== 200) {
+        throw new Error("Unauthorized");
+      } else {
+        login(accessToken);
+        navigate("/dashboard"); // Redirect to dashboard on successful login
+      }
+      // if (jwt)
     } catch (err) {
       setError(err.message);
     }
