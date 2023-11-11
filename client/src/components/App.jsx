@@ -1,5 +1,6 @@
 import "../styles/App.css";
 import FetchingPosts from "./FetchingPosts";
+import User from "./UserDetails";
 
 export function Navbar() {
   return (
@@ -13,6 +14,7 @@ function App() {
   return (
     <>
       <Navbar></Navbar>
+      <User />
       <FetchingPosts />
     </>
   );
