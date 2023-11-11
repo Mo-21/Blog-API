@@ -8,17 +8,16 @@ function useGetPost() {
 
   const param = useParams();
   const link = `/api/posts/${param.postId}`;
-  console.log(link);
   useEffect(() => {
     const fetchPost = async () => {
       try {
         const response = await fetch(link);
         if (!response.ok) throw new Error("Not Authorized");
         const data = await response.json();
-        console.log(data);
         setPost({
           title: data.title,
           content: data.content,
+          profilePic: data.author.profilePic,
           createdAt: data.createdAt,
         });
       } catch (err) {
@@ -43,6 +42,11 @@ function Post() {
       {
         <div key={post.id}>
           <div>{post.title}</div>
+          <img
+            className="user-image"
+            src={`http://localhost:3000/${post.profilePic}`}
+            alt="user_image"
+          />
           <div>{post.content}</div>
           <div>{post.username}</div>
         </div>

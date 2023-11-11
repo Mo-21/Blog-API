@@ -17,7 +17,6 @@ export function usePosts() {
         if (response.status >= 400) console.log(response);
         const actualPosts = await response.json();
         setPostURL(actualPosts);
-        console.log(actualPosts);
       } catch {
         setError(error);
       } finally {
@@ -46,6 +45,11 @@ function Post() {
       <Navbar />
       <div className="one-post-container">
         <div key={postURL.postId} className="one-post">
+          <img
+            className="user-image"
+            src={`http://localhost:3000/${post.profilePic}`}
+            alt="user_image"
+          />
           <div className="one-post-title">{postURL.title}</div>
           <div className="one-post-creationTime">
             Created at: {postURL.createdAt}
