@@ -4,6 +4,8 @@ import ErrorPage from "./ErrorPage";
 import Post from "./Post";
 import Logout from "./Logout";
 import App from "./App";
+import Create from "./CreatePost";
+import Delete from "./Delete";
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -23,10 +25,20 @@ const Router = () => {
       errorElement: <ErrorPage />,
     },
     {
-      path: "/:postId",
+      path: "dashboard/:postId",
       element: <Post />,
       errorElement: <ErrorPage />,
     },
+    {
+      path: "/create",
+      element: <Create />,
+      errorElement: <ErrorPage />,
+    },
+    // {
+    //   path: "dashboard/:postId/delete",
+    //   element: <Delete />,
+    //   errorElement: <ErrorPage />,
+    // },
   ]);
   return <RouterProvider router={router} />;
 };
