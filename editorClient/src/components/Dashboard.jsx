@@ -2,10 +2,18 @@ import PostsProfile from "./FetchingPosts";
 import Logout from "./Logout";
 import { Link } from "react-router-dom";
 
+export function Navbar() {
+  return (
+    <>
+      <div className="title">Mo's Blog</div>
+    </>
+  );
+}
+
 function Dashboard() {
   return (
     <>
-      <h1>Welcome</h1>
+      <Navbar />
       <PostsProfile />
       <Link to="/create">
         <button>Create New Article</button>
