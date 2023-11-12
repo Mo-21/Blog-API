@@ -14,10 +14,7 @@ This is a full stack Blog project built using Node.js, Express, and MongoDB to c
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Configuration](#configuration)
-- [Usage](#usage)
 - [API Endpoints](#api-endpoints)
-- [Frontend Interfaces](#frontend-interfaces)
-- [Contributing](#contributing)
 - [License](#license)
 
 ## Features
