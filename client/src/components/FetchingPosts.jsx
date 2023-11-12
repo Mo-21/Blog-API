@@ -15,7 +15,10 @@ export function usePosts() {
         const data = actualPosts.map((post) => ({
           postId: post._id,
           title: post.title,
-          content: post.content,
+          content:
+            post.content.length > 200
+              ? post.content.slice(0, 200) + "..."
+              : post.content,
           author: post.author,
         }));
         setPostURL(data);
@@ -48,14 +51,13 @@ function PostsProfile() {
       <div className="posts-group">
         {postURL.map((post) => (
           <div key={post.postId} className="post">
-            <div className="post-title">{post.title}</div>
-            <div className="post-content">{post.content}</div>
-            <div className="post-author">{post.author.username}</div>
-            <button data-key={post.postId}>
-              <Link to={`/${post.postId}`} style={{ textDecoration: "none" }}>
-                Read
-              </Link>
-            </button>
+            <Link
+              to={`/${post.postId}`}
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              <div className="post-title">{post.title}</div>
+              <div className="post-content">{post.content}</div>
+            </Link>
           </div>
         ))}
       </div>

@@ -10,12 +10,25 @@ export function Navbar() {
   );
 }
 
+export function Footer() {
+  return (
+    <footer>
+      <div className="footer-group">
+        <div className="name">Mohammad Malaeb</div>
+        <div className="rights">All Rights Reserved 2023 &copy;</div>
+      </div>
+    </footer>
+  );
+}
+
 function App() {
   return (
     <>
       <Navbar></Navbar>
       <User />
+      <h1 className="break">DevBlog</h1>
       <FetchingPosts />
+      <Footer />
     </>
   );
 }

@@ -2,6 +2,8 @@ import { Navbar } from "./App";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Comment from "./Comment";
+import userPic from "../assets/user-pic.jpg";
+import { Footer } from "./App";
 
 export function usePosts() {
   const [postURL, setPostURL] = useState({});
@@ -45,11 +47,7 @@ function Post() {
       <Navbar />
       <div className="one-post-container">
         <div key={postURL.postId} className="one-post">
-          <img
-            className="user-image"
-            src={`http://localhost:3000/${post.profilePic}`}
-            alt="user_image"
-          />
+          <img className="user-image" src={userPic} alt="user_image" />
           <div className="one-post-title">{postURL.title}</div>
           <div className="one-post-creationTime">
             Created at: {postURL.createdAt}
@@ -76,6 +74,7 @@ function Post() {
         )}
       </div>
       <Comment />
+      <Footer />
     </>
   );
 }
