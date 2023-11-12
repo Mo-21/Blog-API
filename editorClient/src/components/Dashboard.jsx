@@ -14,11 +14,13 @@ function Dashboard() {
   return (
     <>
       <Navbar />
+      <div className="action-group">
+        <Link to="/create">
+          <button className="btn btn-success mx-2">Create New Article</button>
+        </Link>
+        <Logout />
+      </div>
       <PostsProfile />
-      <Link to="/create">
-        <button>Create New Article</button>
-      </Link>
-      <Logout />
     </>
   );
 }

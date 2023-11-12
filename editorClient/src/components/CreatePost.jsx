@@ -51,40 +51,45 @@ export default function Create() {
   };
   return (
     <>
-      <form onSubmit={handleSubmission}>
-        <label htmlFor="title">Title</label>
-        <input
-          onChange={handleTitle}
-          type="text"
-          id="title"
-          name="title"
-          value={title}
-          required
-        />
+      <div className="create-group">
+        <form className="create" onSubmit={handleSubmission}>
+          <label htmlFor="title">Title</label>
+          <input
+            onChange={handleTitle}
+            type="text"
+            id="title"
+            name="title"
+            value={title}
+            required
+          />
 
-        <label htmlFor="content">Content</label>
-        <textarea
-          onChange={handleContent}
-          type="text"
-          value={content}
-          id="content"
-          name="content"
-          required
-        />
+          <label htmlFor="content">Content</label>
+          <textarea
+            cols={70}
+            rows={100}
+            onChange={handleContent}
+            type="text"
+            value={content}
+            id="content"
+            name="content"
+            required
+          />
+          <div className="status">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              checked={isDraft}
+              onChange={(e) => setIsDraft(e.target.checked)}
+              id="flexCheckDefault"
+            />
 
-        <input
-          className="form-check-input"
-          type="checkbox"
-          checked={isDraft}
-          onChange={(e) => setIsDraft(e.target.checked)}
-          id="flexCheckDefault"
-        />
-        <label className="form-check-label" htmlFor="flexCheckDefault">
-          Draft?
-        </label>
-
-        <button>Submit</button>
-      </form>
+            <label className="form-check-label" htmlFor="flexCheckDefault">
+              Draft?
+            </label>
+          </div>
+          <button className="btn btn-success mb-3 mt-3">Submit</button>
+        </form>
+      </div>
       {error && <p style={{ color: "red" }}>{error}</p>}
       {loading && <p style={{ color: "red" }}>Loading...</p>}
     </>

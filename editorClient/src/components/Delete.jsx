@@ -27,7 +27,7 @@ function Delete(id) {
           throw new Error(setError("Something went wrong. Please try again"));
         }
         const data = await response.json();
-        navigate("dashboard");
+        navigate("/dashboard");
       } catch (err) {
         console.error(err);
       }

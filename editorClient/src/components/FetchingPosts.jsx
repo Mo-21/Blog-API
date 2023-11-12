@@ -20,7 +20,10 @@ export function usePosts() {
         const data = actualPosts.map((post) => ({
           postId: post._id,
           title: post.title,
-          content: post.content,
+          content:
+            post.content.length > 200
+              ? post.content.slice(0, 200) + "..."
+              : post.content,
           author: post.author,
           profilePic: post.author.profilePic,
           isDraft: post.isDraft,
@@ -77,26 +80,27 @@ function PostsProfile() {
       {
         <div className="posts-group">
           {postURL.map((post) => (
-            <div key={post.postId} className="post">
-              <div className="post-title">{post.title}</div>
-              <div className="post-content">{post.content}</div>
-              <div className="post-status">
-                {post.isDraft === false ? "Live" : "Draft"}
-              </div>
-              <button data-key={post.postId}>
+            <div key={post.postId}>
+              <div className="post">
                 <Link
                   to={`/dashboard/${post.postId}`}
-                  style={{ textDecoration: "none" }}
+                  style={{ textDecoration: "none", color: "black" }}
                 >
-                  Read
+                  <div className="post-title">{post.title}</div>
+                  <div className="post-content">{post.content}</div>
+                  <div className="post-status btn btn-info">
+                    {post.isDraft === false ? "Live" : "Draft"}
+                  </div>
                 </Link>
-              </button>
-              <button
-                onClick={() => handleDelete(post.postId)}
-                data-key={post.postId}
-              >
-                Delete
-              </button>
+
+                <button
+                  className="btn btn-danger"
+                  onClick={() => handleDelete(post.postId)}
+                  data-key={post.postId}
+                >
+                  Delete
+                </button>
+              </div>
             </div>
           ))}
         </div>

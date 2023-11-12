@@ -41,25 +41,34 @@ function Login() {
   };
 
   return (
-    <div>
-      <h1>Sign In</h1>
-      <div>
-        <label>Email:</label>
-        <input
-          type="text"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+    <div className="login-group">
+      <div className="login-group-2">
+        <h1 className="header">Mo's Blog</h1>
+        <h1 style={{ fontWeight: "bold" }}>Sign In</h1>
+        <div className="login">
+          <div>
+            <label className="login-label">Email:</label>
+            <input
+              className="login-input"
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div>
+            <label className="login-label">Password:</label>
+            <input
+              className="login-input"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+        </div>
+        <button className="btn login-btn" onClick={handleSignIn}>
+          Sign In
+        </button>
       </div>
-      <div>
-        <label>Password:</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-      <button onClick={handleSignIn}>Sign In</button>
       {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );

@@ -40,15 +40,17 @@ function Post() {
   return (
     <>
       {
-        <div key={post.id}>
-          <div>{post.title}</div>
-          <img
-            className="user-image"
-            src={`http://localhost:3000/${post.profilePic}`}
-            alt="user_image"
-          />
-          <div>{post.content}</div>
-          <div>{post.username}</div>
+        <div className="one-post-container">
+          <div className="one-post" key={post.id}>
+            <div className="one-post-title">{post.title}</div>
+            <img
+              className="user-image"
+              src={`http://localhost:3000/${post.profilePic}`}
+              alt="user_image"
+            />
+            <div className="one-post-content">{post.content}</div>
+            <div>{post.username}</div>
+          </div>
         </div>
       }
       {error && <p>{error}</p>}
